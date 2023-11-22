@@ -59,7 +59,7 @@ public class BinaryTree {
                 return;
             }
 
-            postorder(root.left);
+            postorder(root.right);
             postorder(root.left);
             System.out.print(root.data + " ");
         }
@@ -387,10 +387,10 @@ public class BinaryTree {
         }
     }
 
-    public static int Mdbe(Node root,int n1,int n2){
+    public static int Mdbe(Node root, int n1, int n2) {
         Node lca = lca2(root, n1, n2);
-        int dist1 = lcaDist(lca,n1);
-        int dist2 = lcaDist(lca,n2)
+        int dist1 = lcaDist(lca, n1);
+        int dist2 = lcaDist(lca, n2);
     }
 
     /* Kth Ancestor of node 1 _> find node 2 if (root.dta == node){ return 0} */

@@ -104,7 +104,8 @@ public class Backtracking {
         return true;// safe nqueens
     }
 
-    public static void nQueens(char board[][], int row) {// O(ni) n n-1 n-2 n-3 n-4 T(n) = 1quene * T(n-1) + issafe()
+    public static void nQueens(char board[][], int row) {// O(ni) n n-1 n-2 n-3 n-4 T(n) = 1quene * T(n-1) + issafe() n
+                                                         // factorial
                                                          // reqrencee relationt T(n) = n*T(n-1) + isSfae // base case
         if (row == board.length) {
             printBoard(board);
@@ -161,8 +162,8 @@ public class Backtracking {
         }
 
         // grid
-        int sr = (row / 3) * 3;
-        int sc = (col / 3) * 3;
+        int sr = (row / 3) * 3;// starting row
+        int sc = (col / 3) * 3;// starting col
 
         for (int i = sr; i < sr + 3; i++) {
             for (int j = sc; j < sc + 3; j++) {
@@ -197,7 +198,7 @@ public class Backtracking {
         for (int digit = 1; digit <= 9; digit++) {
             if (isSafe(sudoku, row, col, digit)) {
                 sudoku[row][col] = digit; // passing digit
-                if (sudokuSolver(sudoku, nextrow, nextcol)) { // dolution exists
+                if (sudokuSolver(sudoku, nextrow, nextcol)) { // solution exists
                     return true;
                 }
 

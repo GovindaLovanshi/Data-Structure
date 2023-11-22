@@ -5,6 +5,7 @@ public class Algorithm {
 
     public static void Bubblesort(int arr[]) {
         for (int turn = 0; turn < arr.length - 1; turn++) {
+            boolean swaped = false;
 
             for (int j = 0; j < arr.length - 1 - turn; j++) {
 
@@ -16,6 +17,10 @@ public class Algorithm {
                     arr[j + 1] = temp;
 
                 }
+            }
+
+            if (swaped == false) {
+                break;
             }
         }
     }

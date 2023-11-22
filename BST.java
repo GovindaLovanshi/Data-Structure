@@ -188,11 +188,10 @@ public class BST {
     }
 
     /* sortd array to balanced bst */
-    public static
 
     public static void main(String args[]) {
-        int value[] = { 8, 5, 3, 1, 7, 6, 10, 11, 14 };
-        Node root = null;
+        // int value[] = { 8, 5, 3, 1, 7, 6, 10, 11, 14 };
+        // Node root = null;
 
         /*
          * for (int i = 0; i < value.length; i++) {
