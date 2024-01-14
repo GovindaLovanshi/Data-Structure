@@ -49,7 +49,24 @@ public class Graphssecond {
 
     }
 
-    // biapartite graph colors algo applied
+    // cycle detection in un dir graph
+
+    public static boolean CycleUn(ArrayList<Edge>Graphs[],boolean visit[],int curr,int par){
+        visit[curr] = true;
+
+        for(int i=0;i<Graphs[curr].size();i++){
+            Edge e = Graph[curr].get(i);
+            if(visit[e.dest] && e.dest != par){// visited hai pr parent nhi hai
+                return true;
+            }else if(!visit[e.dest]){// not visited hai
+                if(CycleUn(Graph,visit,e.dest,curr)){
+                   return true;
+                }
+            }
+        }
+    }
+
+    // bipartite graph colors algo applied
     public static boolean isBiapartite(ArrayList<Edge>[] Graphs) {// Tc O(V+E) graph doesn t have cycle = biapartite
         // graph = even cyccle odd cycle false
         int coler[] = new int[Graphs.length];
@@ -107,17 +124,22 @@ public class Graphssecond {
 
         for (int i = 0; i < Graphs[curr].size(); i++) {
             Edge e = Graphs[curr].get(i);
-            if (stack[e.dest]) { // stack ke andar neigh bour hai cycle hai
+            if (stack[e.dest]) { // stack ke andar(node) neighbour hai cycle hai
                 // cycle
                 return true;
             }
+            /*else if(stack[e.dest]){
+                if(isCycleUtil(graph,e.dest,vis,stack)){
+                    return true;
+                }
+            } */
 
-            if (!visit[e.dest] && cycleDetectedUtill(Graphs, e.dest, visit, stack)) {
+            if (!visit[e.dest] && cycleDetectedUtill(Graphs, e.dest, visit, stack)) {// neighbour not visited
                 return true;
             }
         }
 
-        stack[curr] = false;
+        stack[curr] = false;// curr node remove
         return false;
 
     }
@@ -201,20 +223,19 @@ public class Graphssecond {
         }
 
         // vertexes 0
-        /*
-         * Graphs[0].add(new Edge(0, 1));
-         * 
-         * // vertexes 1
-         * 
-         * Graphs[1].add(new Edge(1, 0));
-         * Graphs[1].add(new Edge(1, 2));
-         * Graphs[1].add(new Edge(1, 3));
-         * 
-         * // vertexes 2
-         * Graphs[2].add(new Edge(2, 1));
-         * Graphs[2].add(new Edge(2, 3));
-         * Graphs[2].add(new Edge(2, 4));
-         */
+                Graphs[0].add(new Edge(0, 1));
+        
+          //vertexes 1
+        
+        Graphs[1].add(new Edge(1, 0));
+        Graphs[1].add(new Edge(1, 2));
+        Graphs[1].add(new Edge(1, 3));
+        
+        // vertexes 2
+        Graphs[2].add(new Edge(2, 1));
+        Graphs[2].add(new Edge(2, 3));
+        Graphs[2].add(new Edge(2, 4));
+        
 
     }
 

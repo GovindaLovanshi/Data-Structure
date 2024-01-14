@@ -3,8 +3,8 @@ import java.util.*;
 //import javax.sound.sampled.SourceDataLine;
 
 public class Hashset {
-    // find ltineraray from tickets
-    // 'mumbai -> bengaluru'
+    // find latiner array from tickets
+    // 'mumbai -> Beng'
     // mumbai -> delhi
     // goa -> chennai
     // delhi -> goa
@@ -86,7 +86,7 @@ public class Hashset {
          */
 
         /*
-         * largest subarray with 0 sum
+         * largest sub array with 0 sum
          * arr = {15-2,2,-8,,1,7,10}
          */
 
@@ -107,11 +107,11 @@ public class Hashset {
          * }
          * }
          * 
-         * System.out.println("largest subarray with sum =>" + length);
+         * System.out.println("largest sub array with sum =>" + length);
          */
 
         /*
-         * subarray sum equal to k
+         * sub a array sum equal to k
          * arr= {1 2 3} k=3
          * ans = 2 {1 2 } {3}
          * sum(j)-k = sum(i) ==> formula

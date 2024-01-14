@@ -16,7 +16,7 @@ public class Hashing {
 
         private int n;// n
         private int N;
-        private LinkedList<Node> buckets[]; // N =buckets .lenhgth
+        private LinkedList<Node> buckets[]; // N =buckets .length array of list
 
         @SuppressWarnings("unchecked")
         public HashMap() {

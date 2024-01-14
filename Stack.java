@@ -19,7 +19,7 @@ public class Stack {
                 return -1;
             }
             int top = list.get(list.size() - 1);
-            list.remove(list.size() - 1);// lasty index ki value remove
+            list.remove(list.size() - 1);// lastyindex ki value remove
             return top;
         }
 
@@ -135,9 +135,9 @@ public class Stack {
         }
     }
 
-    // STOCK SPAN PROBLEM ---> ASK COMPANAY MICROSOFT SAMSUNG FLIPCART ADOBE AMAZON
-    // SPAN --> MAX NO OF CONSECUTIVE DAYS FOR WHICH --> PRICR <= TODAY PRICE
-    // spam = index - prevhigh
+    // STOCK SPAN PROBLEM ---> ASK COMPANY MICROSOFT SAMSUNG FLIP CART ADOBE AMAZON
+    // SPAN --> MAX NO OF CONSECUTIVE DAYS FOR WHICH --> PRICE <= TODAY PRICE
+    // spam = index - prev high
     public static void StocksProblem(int Stocks[], int Span[]) {
         Stack<Integer> s = new Stack<>();
         Span[0] = 1;
@@ -289,6 +289,7 @@ public class Stack {
          * StocksProblem(Stocks, Span);
          * 
          * 
+         * 
          * for(int i=0; i<Span.length; i++){
          * System.out.println(Span[i]+ "");
          * }
@@ -303,7 +304,8 @@ public class Stack {
          * Stack<Integer> s = new Stack<>();
          * int nxtgreater[] = new int [arr.length];
          * 
-         * for(int i=arr.length-1; i>=0; i--){// next greater left for(int i=0;
+         * for(int i=arr.length-1; i>=0; i--){// next greater left
+         * for(int i=0;
          * i<arr.length; i++) next smaller left for(int i=0; i<arr.length; i++)
          * arr[s.peek()] >= arr[i]
          * // 1 while

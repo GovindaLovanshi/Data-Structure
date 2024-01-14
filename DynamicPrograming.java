@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class DynamicPrograming {
-    public static int fib(int n, int f[]) {// tc O(n)
+    public static int fib(int n, int fib[]) {// tc O(n)
         if (n == 0 || n == 1) {
             return n;
         }
@@ -10,8 +10,8 @@ public class DynamicPrograming {
             return f[n];
         }
 
-        f[n] = fib(n - 1, f) + fib(n - 2, f);
-        return f[n];
+        fib[n] = fib(n - 1, fib) + fib(n - 2, fib);
+        return fib[n];
     }
 
     public static int fibTabulation(int n) {// tc O(n)

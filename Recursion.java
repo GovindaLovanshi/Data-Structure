@@ -36,6 +36,7 @@ public class Recursion {
         }
         int Snm1 = calsum(n - 1);
         int sn = n + Snm1;
+        // return calsum(n-1) + n;
         return sn;
     }
 
@@ -141,8 +142,8 @@ public class Recursion {
         }
     }
 
-    // remove duplicate in a string => importent
-    public static void removeDuuplicate(String str, int idx, StringBuilder newStr, boolean map[]) {
+    // remove duplicate in a string => important
+    public static void removeDuplicate(String str, int idx, StringBuilder newStr, boolean map[]) {
         if (idx == str.length()) {
             System.out.println(newStr);
             return;
@@ -151,10 +152,10 @@ public class Recursion {
         // kaam
         char currchar = str.charAt(idx);
         if (map[currchar - 'a'] == true) {
-            removeDuuplicate(str, idx + 1, newStr, map);
+            removeDuplicate(str, idx + 1, newStr, map);
         } else {
             map[currchar - 'a'] = true;
-            removeDuuplicate(str, idx + 1, newStr.append(currchar), map);
+            removeDuplicate(str, idx + 1, newStr.append(currchar), map);
         }
     }
 
@@ -174,6 +175,7 @@ public class Recursion {
         int fnm2 = freindsPair(n - 2);
         int pairways = (n - 1) * fnm2;
         int totways = fnm1 + pairways;
+        
 
         return totways;
 
@@ -226,7 +228,7 @@ public class Recursion {
     }
 
     public static void main(String args[]) {
-        // tring str = "abcde";
+        // string str = "abcde";
         // System.out.println(length(str));
         // String str = "abcab";
         // int n = str.length();

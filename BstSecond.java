@@ -74,7 +74,7 @@ public class BstSecond {
         root = createBST(inorder, 0, inorder.size() - 1);
     }
 
-    /* size of latgest bst in BT */
+    /* size of largest bst in BT */
     static class Info {
         boolean isBST;
         int size;
@@ -151,30 +151,30 @@ public class BstSecond {
 
         // merge arr1 + arr2
         int i = 0, j = 0;
-        ArrayList<Integer> finalarr = new ArrayList<>();
+        ArrayList<Integer> final_arr = new ArrayList<>();
         while (i < arr1.size() && j < arr2.size()) {
             if (arr1.get(i) <= arr2.get(j)) {
-                finalarr.add(arr1.get(i));
+                final_arr.add(arr1.get(i));
                 i++;
             } else {
-                finalarr.add(arr2.get(j));
+                final_arr.add(arr2.get(j));
                 j++;
             }
         }
 
         while (i < arr1.size()) {
-            finalarr.add(arr1.get(i));
+            final_arr.add(arr1.get(i));
             i++;
         }
 
         while (j < arr2.size()) {
-            finalarr.add(arr2.get(j));
+            final_arr.add(arr2.get(j));
             j++;
         }
 
-        // step 4 sorted arrlist se balanced bst
+        // step 4 sorted arr list se balanced bst
 
-        return createBst(finalarr, 0, finalarr.size() - 1);
+        return createBst(final_arr, 0, final_arr.size() - 1);
 
     }
 

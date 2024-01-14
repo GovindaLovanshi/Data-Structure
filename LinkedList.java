@@ -50,7 +50,7 @@ public class LinkedList {
         tail = newNode;
     }
 
-    public void print() {// TC O(n) linnear tc
+    public void print() {// TC O(n) linear tc
         Node temp = head;
         while (temp != null) {
             System.out.print(temp.data + "-->");
@@ -198,7 +198,7 @@ public class LinkedList {
 
     }
 
-    // check if pallindrom ll
+    // check if pal lin dr om linked list
     public Node midNode(Node head) {
         Node slow = head;
         Node fast = head;
@@ -241,7 +241,7 @@ public class LinkedList {
         return true;
     }
 
-    public static boolean isCycle() {// floyed cycle detecting
+    public static boolean isCycle() {// fl oy ed cycle detecting
         Node slow = head;
         Node fast = head;
         while (fast != null && fast.next != null) {
@@ -318,7 +318,7 @@ public class LinkedList {
 
         // merge alternative -- zig zag merge
 
-        while (left != null & right != nul) {
+        while (left != null & right != null) {
             nextL = left.next;
             left.next = right;
             nextR = right.next;

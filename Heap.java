@@ -3,7 +3,7 @@ import java.util.*;
 public class Heap {
     // insert in heap usig array
     // step ==> add at last index
-    // fix heap parerent = x-1/2
+    // fix heap parent = x-1/2
 
     static class HeapA {
         ArrayList<Integer> arr = new ArrayList<>();

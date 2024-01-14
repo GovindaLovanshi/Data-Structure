@@ -226,7 +226,7 @@ public class Algorithm {
 
     static class Pair implements Comparable<Pair> {
         int node;
-        int path;
+        int path;// edge (distance)
 
         public Pair(int node, int path) {
             this.node = node;
@@ -235,16 +235,16 @@ public class Algorithm {
 
         @Override
         public int CompareTo(Pair p2) {
-            return this.path - p2.path;// path base sorting for my pairs
+            return this.path - p2.path;// path base sorting for my pairs ascending base 
         }
     }
 
-    public static void dijkstra(ArrayList<Edge>[] Graph, int src) {// TC O(V+Elogv) using priority queue
+    public static void dijkstra(ArrayList<Edge>[] Graph, int src) {// TC O(V+ ElogV) using priority queue greedy based
         int dist[] = new int[Graph.length];
 
         for (int i = 0; i < Graph.length; i++) {
-            if (src != i) {
-                dist[i] = Integer.MAX_VALUE;// +infinitiy
+            if (i != src) {// not visit
+                dist[i] = Integer.MAX_VALUE;
             }
         }
         boolean visit[] = new boolean[Graph.length];
@@ -254,18 +254,19 @@ public class Algorithm {
 
         // bfs loop
         while (!pq.isEmpty()) {
-            Pair curr = pq.remove();
-            if (!visit[curr.n]) {
-                visit[curr.n] = true;
-                // neighbours
-                for (int i = 0; i < Graph[curr.n].size(); i++) {
-                    Edge e = Graph[curr.n].get(i);
+            Pair current = pq.remove();
+            if (!visit[current.node]) {// node is not visited 
+                visit[current.node] = true;
+                // neigh bours
+                for (int i = 0; i < Graph[current.node].size(); i++) {
+                    Edge e = Graph[current.node].get(i);
                     int u = e.src;
                     int v = e.dest;
                     int wt = e.wt;
 
+                    // important in dijkstra algo 
                     if (dist[u] + wt < dist[v]) {
-                        dist[v] = dist[u] + wt;// updated distance new val
+                        dist[v] = dist[u] + wt;// updated distance new val relaxation 
                         pq.add(new Pair(v, dist[v]));
                     }
 
@@ -281,11 +282,12 @@ public class Algorithm {
         System.out.println();
     }
 
-    // BEllmon ford algo dp based uses of negativve wt but does not negative
-    // weightes cycle
+    // Bell mon ford algo dp based uses of Negative wt but does not negative
+    // weight cycle dynamic programming algorithm based
+    // BFA not worked in for negative weight cycle
     public static void bellmanFord(ArrayList<Edge>[] Graph, int src) {// T O(V*E)
         int dist[] = new int[Graph.length];
-        // intilize
+        // Init il
         for (int i = 0; i < dist.length; i++) {
             if (i != src) {
                 dist[i] = Integer.MAX_VALUE;
@@ -294,22 +296,39 @@ public class Algorithm {
 
         int V = Graph.length;
         // algo -(V)
-        for (int i = 0; i < V - 1; i++) {
+        for (int i = 0; i < V - 1; i++) {// all node
             // edges -O(E)
-            for (int j = 0; j < Graph.length; j++) {// all vertexex find this loop edges cal
+            for (int j = 0; j < Graph.length; j++) {// all vert find this loop edges calculate
                 for (int k = 0; k < Graph[j].size(); k++) {// cal edges
-                    Edge e = Graph[j].get(k);// neghbour
+                    Edge e = Graph[j].get(k);// neg h  b our
                     // u v wt
                     int u = e.src;
                     int v = e.dest;
                     int wt = e.wt;
-                    // relaxation / updation / new value
-                    if (dist[u] != Integer.MAX_VALUE && dist[u] + wt < dist[v]) {
+                    // relaxation / update  /  new value
+                    if (dist[u] != Integer.MAX_VALUE && dist[u] + wt < dist[v]) {// java me infinity value me positive value add hone pr value negative aa ja tee hai
                         dist[v] = dist[u] + wt;
                     }
                 }
 
             }
+        }
+
+        // detect negative weight cycle
+
+        for (int j = 0; j < Graph.length; j++) {// all vert find this loop edges calculate
+            for (int k = 0; k < Graph[j].size(); k++) {// cal edges
+                Edge e = Graph[j].get(k);// neg h  b our
+                // u v wt
+                int u = e.src;
+                int v = e.dest;
+                int wt = e.wt;
+                // relaxation / update  /  new value
+                if (dist[u] != Integer.MAX_VALUE && dist[u] + wt < dist[v]) {// java me infinity value me positive value add hone pr value negative aa ja tee hai
+                    System.out.println("negative wt cycle exist");
+                }
+            }
+
         }
 
         // print
@@ -327,19 +346,20 @@ public class Algorithm {
         int cost;
 
         public Pairs(int v, int c) {
-            this.v = v;
+            this.v = v;// node
             this.cost = c;
         }
 
         @Override
         public int CompareTo(Pairs p2) {
-            return this.cost - p2.cost;// assending
+            return this.cost - p2.cost;// ascending based on cost
         }
     }
 
-    public static void PrimsAlgo(ArrayList<Edge> Graph[]) {
-        boolean visit[] = new boolean[Graph.length];
-        PriorityQueue<Pairs> pq = new PriorityQueue<>();
+    public static void PrimsAlgo(ArrayList<Edge> Graph[]) {// TC O(E logE)
+       // ArrayList<Edge>edge = new ArrayList<>(); cal edges 
+        boolean visit[] = new boolean[Graph.length];// mst set (iamgine)
+        PriorityQueue<Pairs> pq = new PriorityQueue<>();// non mst  set  (iamgine) worst case E  ] [(E logE)
         pq.add(new Pairs(0, 0));
         int finalCost = 0; // MST cost/weighted total minimum weighted
 
@@ -349,9 +369,11 @@ public class Algorithm {
                 visit[curr.v] = true;
                 finalCost += curr.cost;
 
-                for (int i = 0; i < Graph[curr.v].size(); i++) {
+                for (int i = 0; i < Graph[curr.v].size(); i++) {//neg bor
                     Edge e = Graph[curr.v].get(i);
-                    pq.add(new Pairs(e.dest, e.wt));
+                    if(!visit[e.dest]){
+                        pq.add(new Pairs(e.dest, e.wt));
+                    }
                 }
             }
         }
@@ -505,6 +527,22 @@ public class Algorithm {
 
         System.out.println();
     }
+    public staticvoid DFSAllPath(ArrayList<Edge>[]Graph,boolean visit[],int curr,String path,int target){// TC O(V^V) very bad not use large graph 
+        if(curr == target){
+            System.out.println(path);
+            return;
+        }
+
+        for(int i=0;i<Graph[curr].size();i++){
+            Edge e = Graph[curr].get(i);
+            if(!visit[e.dest]){
+                visit[curr] = true;// taverse time
+                DFSAllPath(Graph,visit,e.dest,path+e.dest,target);
+                visit[curr] = false;// return aane pr false
+            }
+        }
+
+    } 
 
     public static void bfsdivided(ArrayList<Edge>[] Graphs) {
         Boolean visit[] = new Boolean[Graphs.length];
@@ -543,15 +581,16 @@ public class Algorithm {
         Boolean visit[] = new Boolean[Graphs.length];
         q.add(0);// source
 
-        while (!q.isEmpty()) {
+        while (!q.isEmpty()) {// q empty nahi hoti hai
 
-            int curr = q.remove();
+            int curr = q.remove();// 
 
             // visite 3 step
             if (!visit[curr]) {
                 // 1 st step
                 System.out.print(curr + " ");
                 visit[curr] = true;// step 2
+
                 // find neighbours
                 for (int i = 0; i < Graphs[curr].size(); i++) {
                     Edge E = Graphs[curr].get(i);
@@ -581,20 +620,20 @@ public class Algorithm {
         }
     }
 
-    public static void DFS(ArrayList<Edge>[] Graphs, int curr, boolean visit[]) { // o(v+e)
+    public static void DFS(ArrayList<Edge>[] Graphs, int curr, boolean visit[]) { // o(v+e)  //keep going to the first 1st neighbours
         // visit
         System.out.print(curr + "");
         visit[curr] = true;
 
         for (int i = 0; i < Graphs[curr].size(); i++) {
             Edge e = Graphs[curr].get(i);
-            if (!visit[e.dests]) {
-                DFS(Graphs, e.dest, visit);
+            if (!visit[e.dests]) {// neghbour not visited  
+                DFS(Graphs, e.dest, visit);// e.dest is neghbours
             }
         }
     }
 
-    // kruskal algorithm find mst freedy base a TC O(V + ElogE)
+    // kruskal algorithm find mst greedy base a TC O(V + ElogE)
     public static void kruskalMst(ArrayList<Edge> edges, int V) {
         Collection.sort(edges);// log E
         int mstcost = 0;
@@ -700,7 +739,7 @@ public class Algorithm {
 
         for (int i = 0; i < Graphs[curr].size(); i++) {
             Edge e = Graphs[curr].get(i);
-            if (!visit[e.dest]) {
+            if (!visit[e.dest]) {// neigbour not visited
                 topSort(Graphs, e.dest, visit, s);
             }
         }
@@ -709,7 +748,7 @@ public class Algorithm {
     }
 
     public static void kosarajuAlgo(ArrayList<Edge> Graphs[], int V) { // O(v+e)
-        // step 1
+        // step 1 topo sort arder store V + E 
         Stack<Integer> s = new Stack<>();
         boolean visit[] = new boolean[V];
         for (int i = 0; i < V; i++) {
@@ -718,25 +757,25 @@ public class Algorithm {
             }
         }
 
-        // step 2 transpose graph reverse o(V+e)
-        ArrayList<Edge> transpose[] = new ArrayList[V];
-        for (int i = 0; i < Graphs.length; i++) {
-            visit[i] = false;
+        // step 2 transpose graph reverse o(V+e) reverse edges direction
+        ArrayList<Edge> transpose[] = new ArrayList[V];// transpose graph 
+        for (int i = 0; i < Graphs.length; i++) {// initilise 
+            visit[i] = false;// re use initilize 
             transpose[i] = new ArrayList<Edge>();
         }
 
         for (int i = 0; i < V; i++) {
             for (int j = 0; j < Graphs[i].size(); i++) {
                 Edge e = Graphs[i].get(j);
-                transpose[e.dest].add(new Edge(e.dest, e.src));// reverse edge
+                transpose[e.dest].add(new Edge(e.dest, e.src));// reverse edge e.dest add new aedge
             }
         }
 
-        // step 3 O(v+e)
+        // step 3 O(v+e) e.dest add new aedge
         while (!s.isEmpty()) {
             int curr = s.pop();
             if (!visit[curr]) {
-                System.out.print("SCC-->");
+                System.out.print("STRONGEST CONNECTED COMPONENT-->");
                 dfs(transpose, curr, visit);// src
                 System.out.println();
             }

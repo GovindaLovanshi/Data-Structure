@@ -9,7 +9,7 @@ public class Hash {
         }
         for (int i = 0; i < s.length(); i++) {
             char ch = s.charAt(i);
-            map.put(ch, map.getOrDefault(ch, 0) + 1);// increse freq
+            map.put(ch, map.getOrDefault(ch, 0) + 1);// increase frequency
         }
 
         for (int i = 0; i < t.length(); i++) {

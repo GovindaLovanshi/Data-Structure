@@ -52,15 +52,15 @@ public class BinaryTree {
             inordertrav(root.right);// right
         }
 
-        // poost order
+        // post order
 
-        public static void postorder(Node root) {
+        public static void post_order(Node root) {
             if (root == null) {
                 return;
             }
 
-            postorder(root.right);
-            postorder(root.left);
+            post_order(root.right);
+            post_order(root.left);
             System.out.print(root.data + " ");
         }
 
@@ -95,20 +95,20 @@ public class BinaryTree {
             }
         }
 
-    }
 
-    /*
-     * static class Node {
-     * int data;
-     * Node left, right;
-     * 
-     * public Node(int data) {
-     * this.data = data;
-     * this.left = null;
-     * this.right = null;
-     * }
-     * }
-     */
+
+    
+//  static class Node {
+//  int data;
+//  Node left, right;
+
+//  public Node(int data) {
+//  this.data = data;
+// this.left = null;
+//  this.right = null;
+//  }
+//  }
+    
 
     // height of tree
     public static int height(Node root) { // O(n)
@@ -187,8 +187,8 @@ public class BinaryTree {
     }
 
     /*
-     * subtree of anothe tree
-     * 1 fund subroot in tree
+     * subtree of another tree
+     * 1 fund sub root in tree
      * 2 check identical (subtree,node subtree)
      */
 

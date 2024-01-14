@@ -3,18 +3,16 @@ import java.util.*;
 public class Array {
   public static void GetlargestNUmber(int number[]) {
     int largest = Integer.MIN_VALUE;
-    int secondlargest = Integer.MIN_VALUE;
+    
 
     for (int i = 0; i < number.length; i++) {
       if (largest < number[i]) {
         largest = number[i];
       }
 
-      if (secondlargest < number[i] && largest != number[i]) {
-        secondlargest = number[i];
-      }
+      
     }
-    System.out.println("First largest : =" + largest + "second largest = :" + secondlargest);
+    
   }
 
   public static int BinarySearch(int number[], int key) {
@@ -56,10 +54,10 @@ public class Array {
   public static void pairs(int number[]) {
 
     for (int i = 0; i < number.length; i++) {
-      int curr = number[i];
+      int current = number[i];
 
-      for (int j = i + 1; i < number.length; j++) {
-        System.out.println("(" + curr + " ," + number[j] + ")");
+      for (int j = i + 1; j < number.length; j++) {
+        System.out.println("(" + current + " ," + number[j] + ")");
       }
       System.out.println(" " + " ");
     }
@@ -85,7 +83,7 @@ public class Array {
 
   public static void kadanes(int number[]) {
 
-    int ms = Integer.MIN_VALUE;// mcimum summ
+    int ms = Integer.MIN_VALUE;// maximum sum
     int cs = 0;// current sum
 
     for (int i = 0; i < number.length; i++) {
@@ -111,7 +109,7 @@ public class Array {
     // calculate right maximum boundary
     // applying loop
     // water level = min(left max boundary , right max boundary)
-    // trapped water = waterlevel - height[i]
+    // trapped water = water level - height[i]
 
     // 1st step
     int n = height.length;
@@ -163,7 +161,7 @@ public class Array {
 
     int buyprice = Integer.MAX_VALUE;
 
-    int maxprofit = 0;
+    int max_profit = 0;
 
     for (int i = 0; i < price.length; i++) {
 
@@ -171,7 +169,7 @@ public class Array {
 
         int profit = price[i] - buyprice;
 
-        maxprofit = Math.max(maxprofit, profit);
+        max_profit = Math.max(max_profit, profit);
       } else {
         buyprice = price[i];
       }
