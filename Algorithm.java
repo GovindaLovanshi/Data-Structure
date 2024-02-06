@@ -457,7 +457,7 @@ public class Algorithm {
 
     public static void heapSort(int arr[]) {// O(nlogn)
         // step - build maxheap
-        int b = arr.length;
+        int n = arr.length;
         for (int i = n / 2; i >= 0; i--) {// O(nlogn)
             heapifys(arr, i, n);
         }
