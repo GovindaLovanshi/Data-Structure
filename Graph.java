@@ -1,22 +1,17 @@
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.PriorityQueue;
-import java.util.Stack;
-
-public class Graph {
-    static class Edge {
+public class Graph{
+    static class Edge{
         int src;
         int dest;
         int wt;
 
-        public Edge(int s, int d, int w) {
-            src = s;
-            dest = d;
-            wt = w;
+        public Edge(int src,int dest,int wt){
+            this.src = src;
+            this.dest = dest;
+            this.wt = wt;
         }
     }
-
     static class Pair implements Comparable<Pair> {
+
         int node;
         int path;// edge (distance)
 
@@ -28,107 +23,9 @@ public class Graph {
         @Override
         public int CompareTo(Pair p2) {
             return this.path - p2.path;// path base sorting for my pairs ascending base
+       
         }
     }
-
-    public static void Dijkstra(ArrayList<Edge> Graph[], int src) {
-        int dist[] = new int[Graph.length];
-
-        for (int i = 0; i < Graph.length; i++) {
-            if (i != src) {
-                dist[i] = Integer.MAX_VALUE;
-            }
-        }
-
-        boolean visted[] = new boolean[Graph.length];
-        PriorityQueue<Pair> pq = new PriorityQueue<>();
-        pq.add(new Pair(src, 0));
-
-        while (!pq.isEmpty()) {
-            Pair current = pq.remove();
-            if (!visted[current.node]) {
-                visted[current.node] = true;
-
-                for (int i = 0; i < Graph[current.node].size(); i++) {
-                    Edge e = Graph[current.node].get(i);
-                    int u = e.src;
-                    int v = e.dest;
-                    int wt = e.wt;
-
-                    // important update
-
-                    if (dist[u] + wt < dist[v]) {
-                        dist[v] = dist[u] + wt;// update distance new val
-                        pq.add(new Pair(v, dist[v]));
-                    }
-                }
-            }
-        }
-
-        // print of all source to vertexes to all shortest path
-        for (int i = 0; i < dist.length; i++) {
-            System.out.print(dist[i] + "");
-        }
-
-        System.out.println();
-    }
-
-    public static void bellmanFord(ArrayList<Edge> Graph[], int src) {
-        int distance[] = new int[Graph.length];
-
-        for (int i = 0; i < Graph.length; i++) {
-            if (i != src) {
-                distance[i] = Integer.MAX_VALUE;
-            }
-        }
-
-        int V = Graph.length;
-
-        for (int i = 0; i < V - 1; i++) {// all node
-            for (int j = 0; j < Graph.length; j++) {// all vert find this loop edges calculate
-                for (int k = 0; k < Graph[j].size(); k++) {// neg h b our
-                    Edge e = Graph[j].get(k);
-                    int u = e.src;
-                    int v = e.dest;
-                    int wt = e.wt;
-
-                    if (distance[u] != Integer.MAX_VALUE && distance[u] + wt < distance[v]) {// java me infinity value
-                                                                                             // me positive
-                        // value add hone pr value negative aa
-                        // ja tee ha
-                        distance[v] = distance[u] + wt;
-                    }
-                }
-            }
-        }
-
-        // detect negative weight cycle
-
-        for (int j = 0; j < Graph.length; j++) {// all vert find this loop edges calculate
-            for (int k = 0; k < Graph[j].size(); k++) {// cal edges
-                Edge e = Graph[j].get(k);// neg h b our
-                // u v wt
-                int u = e.src;
-                int v = e.dest;
-                int wt = e.wt;
-                // relaxation / update / new value
-                if (distance[u] != Integer.MAX_VALUE && distance[u] + wt < distance[v]) {// java me infinity value me
-                                                                                         // positive value
-                    // add hone pr value negative aa ja tee hai
-                    System.out.println("negative wt cycle exist");
-                }
-            }
-
-        }
-
-        // print
-        for (int i = 0; i < distance.length; i++) {
-            System.out.print(distance[i] + "");
-        }
-
-        System.out.println();
-    }
-
     static class Pairs implements Comparable<Pairs> {
         int v;// vertex
         int cost;
@@ -143,183 +40,351 @@ public class Graph {
             return this.cost - p2.cost;// ascending based on cost
         }
     }
+    public static void CreateGraph( ArrayList<Edge>graph[]){
+       for(int i = 0;i<graph.length;i++){
+        graph[i] = new ArrayList<>();
+       }
 
-    public static void PrimsAlgo(ArrayList<Edge> Graph[]) {
-        boolean visited[] = new boolean[Graph.length];
-        PriorityQueue<Pairs> pq = new PriorityQueue<Pairs>();
+       // vertexes 0
+       Graphs[0].add(new Edge(0, 1));
 
-        pq.add(new Pairs(0, 0));
+       // vertexes 1
+
+       Graphs[1].add(new Edge(1, 0));
+       Graphs[1].add(new Edge(1, 2));
+       Graphs[1].add(new Edge(1, 3));
+
+       // vertexes 2
+       Graphs[2].add(new Edge(2, 1));
+       Graphs[2].add(new Edge(2, 3));
+       Graphs[2].add(new Edge(2, 4));
+    }
+
+
+    public static void BFS(ArrayList<Edge>graph[]){
+        boolean visited[] = new boolean[graph.length];
+        Queue<Integer> q = new LinkedList<>();
+
+        q.add();
+
+        while(!q.isEmpty()){
+            int current = q.remove();
+
+            if(!visited[current]){
+                System.out.print(current+" ");
+                visited[current] = true;
+
+                for(int i = 0;i<graph[current].size();i++){
+                    Edge e = graph[current].get(i);
+                    if(!visited[e.dest]){
+                        q.add(e.dest);
+                    }
+                }
+            }
+        }
+    }
+
+    public static void BFS_Divide(ArrayList<Edge>[] graphs) {
+        Boolean visited[] = new Boolean[graphs.length];
+
+        for (int i = 0; i < graphs.length; i++) {
+            if (!visited[i]) {
+                BFSUtil(graphs, visited);
+            }
+        }
+    }
+
+    public static void BFSUtil(ArrayList<Edge>[] graphs, boolean visited[]) {
+        Queue<Integer> q = new LinkedList<>();
+        q.add(0);// source
+
+        while (!q.isEmpty()) {
+
+            int current = q.remove();
+
+            // visited 3 step
+            if (!visited[current]) {
+                // 1 st step
+                System.out.print(current + " ");
+                visited[current] = true;// step 2
+                
+                for (int i = 0; i < graphs[current].size(); i++) {
+                    Edge E = graphs[current].get(i);
+                    q.add(E.dest);
+                }
+            }
+        }
+    }
+
+    public static void DFS(ArrayList<Edge>graph[],int current,boolean visited[]){
+        System.out.println(current+ " ");
+        visited[current] = true;
+
+        for(int i = 0;i<graph[current].size();i++){
+            Edge e = graph[current].get(i);
+            if(!visited[e.dest]){
+                DFS(graph, e.dest, visited);
+            }
+        }
+    }
+
+    public static void DFSDivided(ArrayList<Edge>[] graphs) {
+        boolean visited[] = new boolean[graphs.length];
+        for (int i = 0; i < graphs.length; i++) {
+            DFSUtil(Graphs, i, visited);
+        }
+    }
+
+    public static void DFSUtil(ArrayList<Edge>[] graphs, int current, boolean visited[]) { // o(v+e)
+        // visit
+        System.out.print(current + "");
+        visited[current] = true;
+
+        for (int i = 0; i < graphs[current].size(); i++) {
+            Edge e = graphs[current].get(i);
+            if (!visited[e.dest]) {
+                DFSUtil(graphs, e.dest, visited);
+            }
+        }
+    }
+
+    public static void DFSAllPath(ArrayList<Edge>[] Graph, boolean visited[], int current, String path, int target) {// O(V^V)
+        
+       if (current == target) {
+        System.out.println(path);
+        return;
+    
+
+      for (int i = 0; i < graph[current].size(); i++) {
+          Edge e = graph[current].get(i);
+          if (!visited[e.dest]) {
+            visited[current] = true;// tav e rse time
+            DFSAllPath(Graph, visit, e.dest, path + e.dest, target);
+            visited[current] = false;// return aa ne pr false
+          }
+        }
+
+    }
+
+    public static boolean CycleDetectionUndirected(ArrayList<Edge> graph[],boolean visited[],int current,int parent){
+        visited[current] = true;
+
+        for(int i = 0;i<graph[current].size();i++){
+            Edge e = graph[current].get(i);
+            if(visited[e.dest] && e.dest != parent){
+                return true;
+            }else if(!visited[e.dest]){
+                if(C=CycleDetectionUndirected(graph,visited,e.dest,current)){
+                    return true;
+                }
+            }
+        }
+    }
+
+    public static boolean isCycleUtil(ArrayList<Edge>graph[],int current,boolean visited[],boolean stack){
+        stack[current] = true;
+        visited[current] = true;
+
+        for(int i=0;i<graph[current].size();i++){
+            Edge e = graph[current].get(i);
+            if(stack[e.dest]){
+                // stack ke under hee node neigh ber hee cycle hai
+                return true
+            }  /*
+            * else if(stack[e.dest]){
+            * if(isCycleUtil(graph,e.dest,vis,stack)){
+            * return true;
+            * }
+            * }
+            */
+
+            if(!visited[e.dest]  && cycleDetectedUtil(graph,e.dest,visited,stack)){
+                return true;
+            }
+
+            stack[current] = false;// return aa te time node remove
+            return false;
+        }
+
+         // cycle detection in directed graph
+    }
+    public static boolean isCycleDirected(ArrayList<Edge>[] graphs) {
+        boolean visited[] = new boolean[graphs.length];
+        boolean stack[] = new boolean[graphs.length];
+
+        for (int i = 0; i < graphs.length; i++) {
+            if (!visited[i]) {
+                if (cycleDetectedUtill(Graphs, i, visited, stack)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+
+    public static void PrimsAlgo(ArrayList<Edge>graph[]){
+        boolean visited[] = new boolean[graph.length];
+        PriorityQueue<Pairs> pq = new PriorityQueue<>();
         int finalCost = 0;
+        pq.add(new Pairs(0,0));
 
-        while (!pq.isEmpty()) {
+        while(!pq.isEmpty()){
             Pairs current = pq.remove();
-
-            if (!visited[current.v]) {
+            if(!visited[current.v]){
                 visited[current.v] = true;
                 finalCost += current.cost;
 
-                for (int i = 0; i < Graph[current.v].size(); i++) {
-                    Edge e = Graph[current.v].get(i);
-                    if (!visited[e.dest]) {
-                        pq.add(new Pairs(e.dest, e.wt));
+                for(int i=0;i<graph[current.v].size();i++){
+                    Edge e = graph[current.v].get(i);
+                    if(!visited[e.dest]){
+                        pq.add(new pairs(e.dest,e.wt));
                     }
                 }
             }
         }
 
-        System.out.println("final cost : " + finalCost);
+        System.out.println("Final Cost" + finalCost);
     }
 
-    public static void KruskalAlgorithm(ArrayList<Edge> edges, int V) {
+    public static void krlAlgo(ArrayList<Edge> edges.,int V){
         Collection.sort(edges);
-        int mst_cost = 0;
         int count = 0;
+        int costOfMst = 0;
 
-        for (int i = 0; i < V - 1; i++) {
-            Edge e = edges.get(i);
-            int ParentA = find(e.src);
-            int ParentB = find(e.dest);
+        for(int i = 0;i<V-1;i++){
+            Edge e= edges.get(i);
+            // source Dest
 
-            if (ParentA != ParentB) {
-                // no cycle
-                union(e.src, e.dest);
-                mst_cost += e.wt;
+            int parA = find(e.src);
+            int parB = find(e.dest);
+
+            if(parA != parB){
+                // no cycle detection.
+                union(e.src,e.dest);
+                costOfMst += e.wt;
                 count++;
             }
         }
 
-        System.out.println("Final Mst Cost : " + mst_cost);
+        System.out.Println("final Cost of MST : "+ costOfMst);
     }
-
-    public static void topSort(ArrayList<Edge> Graphs[], int curr, boolean visit[], Stack<Integer> s) {
-        visit[curr] = true;
-
-        for (int i = 0; i < Graphs[curr].size(); i++) {
-            Edge e = Graphs[curr].get(i);
-            if (!visit[e.dest]) {// neigbour not visited
-                topSort(Graphs, e.dest, visit, s);
-            }
-        }
-
-        s.push(curr);
-    }
-
-    public static boolean cycleInDirectGraph(ArrayList<Edge> Graph[], boolean visited[], int curr, int parent) {
-        visited[curr] = true;
-
-        for (int i = 0; Graph[curr].size(); i++) {
-            Edge e = Graph[curr].get(i);
-            if (!visited[e.dest]) {
-                if (cycleInDirectGraph(Graph, visited, e.dest, curr)) {
-                    return true;
-                }
-            } else if (visited[e.dest] && e.dest != parent) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public static boolean cycledetectet(ArrayList<Edge> Graphs[]) {
-        boolean vis[] = new boolean[Graphs.length];
-        for (int i = 0; i < Graphs.length; i++) {
-            if (!vis[i]) {
-                if (cycleInDirectGraph(Graphs, vis, i, -1)) {
-                    return true;
-                    // cycle exists in the parts
-                }
-
-            }
-        }
-        return false;
-    }
-
-    public static boolean cycleInUndirectedGraph(ArrayList<Edge> graph[], boolean visited[], int current, int parent) {
+    public static void topSort(ArrayList<Edge> graph[], int current, boolean visited[], Stack<Integer> s) {
         visited[current] = true;
 
-        for (int i = 0; i < Graph[current].size(); i++) {
-            Edge e = Graph[current].get(i);
-            if (visited[e.dest] && e.dest != parent) {
-                return true;
-            } else if (!visited[e.dest]) {
-                if (cycleInUndirectedGraph(graph, visited, e.dest, current)) {
-                    return true;
-                }
+        for (int i = 0; i < graphs[current].size(); i++) {
+            Edge e = graphs[current].get(i);
+            if (!visited[e.dest]) {// ne ig bo ur not visited
+                topSort(graphs, e.dest, visited, s);
             }
         }
-        return false;
+
+        s.push(current);
     }
 
-    final static int INF = 99999, V = 4;
+    public static void dijkstraAlgo(ArrayList<Edge>graph[],int src){
+        int distance[] = new int[graph.length];
 
-    void floydWarshall(int graph[][]) {
-        int dist[][] = new int[V][V];
-        int i, j, k;
-
-        for (i = 0; i < V; i++) {
-            for (j = 0; j < V; j++) {
-                dist[i][j] = graph[i][j];
+        for(int i = 0;i<graph.length;i++){
+            if(i != src){
+                dist[i] = Integer.MAX_VALUE;
             }
         }
 
-        for (k = 0; k < V; k++) {
-            for (i = 0; i < V; i++) {
-                for (j = 0; j < V; j++) {
-                    if (dist[i][k] + dist[k][j] < dist[i][j]) {
-                        dist[i][j] = dist[i][k] + dist[k][j];
+        boolean visited[] = new boolean[graph.length];
+        PriorityQueue<Pair> pq = new PriorityQueue<>();
+        pq.add(new Pairs(0,src));
+
+        while(!pq.isEmpty()){
+            Pair current = pq.remove();
+            if(!visited[current.node]){
+                visited[current.node] = true;
+
+                for(int i = 0;i<graph[current.node].size();i++){
+                    Edge e = graph[current.node].get(i);
+                    int u = e.src;
+                    int v= e.dest;
+                    int wt = e.wt;
+
+                    // important in dijkstra algo relaxation condition
+                    if(distance[u]+wt <distance[v]){
+                        dist[v] = dist[u] + wt;
+                        pq.add(new Pairs(v,distance[v]));
                     }
                 }
             }
         }
 
-        printSolution(dist);
+        // print of all source to vertexes to all shortest path
+        for (int i = 0; i < distance.length; i++) {
+            System.out.print(distance[i] + "");
+        }
+
+        System.out.println();
     }
 
-    void printSolution(int dist[][]) {
-        System.out.println("The Following matrix show the shortest " + "distance between every pair of vertexes");
+    // Bell mon ford algo dp based uses of Negative wt but does not negative
+    // weight cycle dynamic programming algorithm based
+    // BFA not worked in for negative weight cycle
 
-        for (int i = 0; i < V; ++i) {
-            for (int j = 0; j < V; ++j) {
-                if (dist[i][j] == INF) {
-                    System.out.print("INF ");
-                } else {
-                    System.out.print(dist[i][j] + " ");
+    public static void bellmanFord(ArrayList<Edge>[] graph, int src) {// T O(V*E)
+        int distance[] = new int[graph.length];
+        // Init il
+        for (int i = 0; i < distance.length; i++) {
+            if (i != src) {
+                distance[i] = Integer.MAX_VALUE;
+            }
+        }
+
+        int V = graph.length;
+        // algo -(V)
+        for (int i = 0; i < V - 1; i++) {// all node
+            // edges -O(E)
+            for (int j = 0; j < graph.length; j++) {// all vert find this loop edges calculate
+                for (int k = 0; k < graph[j].size(); k++) {// cal edges
+                    Edge e = graph[j].get(k);// neg h b our
+                    // u v wt
+                    int u = e.src;
+                    int v = e.dest;
+                    int wt = e.wt;
+                    // relaxation / update / new value
+                    if (distance[u] != Integer.MAX_VALUE && distance[u] + wt < distance[v]) {// java me infinity value me positive value add hone pr value negative aa ja tee hai
+                        distance[v] = distance[u] + wt;
+                    }
+                }
+
+            }
+        }
+
+        // detect negative weight cycle
+
+        for (int j = 0; j < graph.length; j++) {// all vert find this loop edges calculate
+            for (int k = 0; k < graph[j].size(); k++) {// cal edges
+                Edge e = graph[j].get(k);// neg h b our
+                // u v wt
+                int u = e.src;
+                int v = e.dest;
+                int wt = e.wt;
+                // relaxation / update / new value
+                if (distance[u] != Integer.MAX_VALUE && distance[u] + wt < distance[v]) {// java me infinity value me positive value add hone pr value negative aa ja tee hai
+                    System.out.println("negative wt cycle exist");
                 }
             }
 
-            System.out.println();
-        }
-    }
-
-    // flood fill algorithm
-    public static void helper(int[][] image, int strow, int stcol, int color, boolean vis[][], int orignalcolor) {// O(m*n)
-        // base case
-        if (strow < 0 || stcol < 0 || strow >= image.length || stcol >= image[0].length || vis[strow][stcol]
-                || image[strow][stcol] != orignalcolor) {
-            return;
         }
 
-        // left
-        helper(image, strow, stcol - 1, color, vis, orignalcolor);
-        // right
-        helper(image, strow, stcol + 1, color, vis, orignalcolor);
-        // up
-        helper(image, strow - 1, stcol, color, vis, orignalcolor);
-        // soen
-        helper(image, strow + 1, stcol, color, vis, orignalcolor);
+        // print
+        for (int i = 0; i < distance.length; i++) {
+            System.out.print(distance[i] + "");
+        }
+
+        System.out.println();
     }
-
-    public static int[][] floodFillAlgo(int[][] image, int strow, int stcol, int color) {
-        boolean vis[][] = new boolean[image.length][image[0].length];
-        helper(image, strow, stcol, color, vis, image[sc][sc]);
-        return image;
-
-    }
-
-    public static void main(String[] args) {
-        int graph[][] = { { 0, 5, INF, 10 }, { INF, 0, 3, INF }, { INF, INF, 0, 1 }, { INF, INF, INF, 0 } };
-        Google g = new Google();
-        g.floydWarshall(graph);
+    public static void main(String args[]){
+        ArrayList<Edge>[] Graphs = new ArrayList[5];
+        for(int i = 0;i<5;i++){
+            Graphs[i] = new ArrayList<>();
+        }
     }
 }
