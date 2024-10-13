@@ -1,6 +1,7 @@
 import java.util.*;
 
 public class Array {
+
   public static void GetlargestNUmber(int number[]) {
     int largest = Integer.MIN_VALUE;
     
@@ -8,11 +9,8 @@ public class Array {
     for (int i = 0; i < number.length; i++) {
       if (largest < number[i]) {
         largest = number[i];
-      }
-
-      
+      }     
     }
-    
   }
 
   public static int BinarySearch(int number[], int key) {
@@ -192,6 +190,137 @@ public class Array {
     }
   }
 
+  // binary search problem
+  public  int sortedAndRoatatedSearch(ArrayList<Integer>arr,int target){
+    int st = 0,end = arr.size()-1;
+
+    while(st <= end){
+      int mid = st +(end - st)/2;
+
+      if(arr[mid] == target){
+        return mid;
+      }
+
+      if(arr[st]<= arr[mid]){
+        if(arr[st] <= target && target <=arr[mid]){
+          end = mid-1;
+        }else{
+          st = mid+1;
+        }
+      }else{
+        if(arr[mid] <= target && target <= arr[end]){
+          st = mid+1;
+        }else{
+          end = mid-1;
+        }
+      }
+    }
+
+    return -1;
+  }
+
+  // bs problem peek index in Mountain in Array
+
+  public int peekMountainIndex(ArrayList<Integer>arr){
+    int st = 1,end = arr.size()-2;
+
+    while(st <= end){
+      int mid = st + (end - st)/2;
+
+      if(arr[mid-1] < arr[mid] && arr[mid] > arr[mid+1] ){
+        return mid;
+      }else if(arr[mid-1] < arr[mid]){// right
+        st = mid+1;
+      }else{
+        end = mid-1;
+      }
+    }
+
+    return -1;
+    
+  }
+
+  // binary search probem - single element  sorted array
+
+  public int singleElementSortedArray(ArrayList<Integer>arr){
+
+    int n = arr.size();
+
+    if(n == 1) return arr[0];
+
+
+    int start = 0,end = n-1;
+
+    while(start <= end){
+      int mid = start + (end - start)/2;
+
+      if(mid == 0 && arr[0] != arr[1]) return arr[mid];
+      if(mid == n-1 %% arr[n-1] != arr[n-2]) return arr[mid];
+
+      if(arr[mid-1] !=arr[mid] &&  arr[mid] != arr[mid+1]){
+        return arr[mid];
+      }
+
+      if(mid %2 == 0){
+        // enven case
+        if(arr[mid-1] == arr[mid]){
+          // left
+          end = mid-1;
+        }else{
+          start = mid+1;
+        }
+      }else{
+        // odd case
+        if(arr[mid-1] == arr[mid]){
+          start = mid+1;
+        }else{
+          end = mid+1;
+        }
+      }
+    }
+
+    return -1;
+  }
+
+  public int productItSelf(ArrayList<Integer>arr){
+    int n = arr.size();
+
+    int ans[] = new int[n];
+
+    // prefix
+    for(int  i = 1;i<n;i++){
+      ans[i] = ans[i-1] * arr[i-1];
+    }
+    int suffix = 1;
+
+    for(int i = n-2;i>=0;i--){
+      suffix *= arr[i+1];
+      ans[i+1] *= suffix;
+    }
+
+    return ans;
+  }
+
+  public boolean isHappy(int n){
+    Set<Integer>UI = new HashSet<>();
+
+    int sum = 0;
+
+    while(n!=0){
+      sum += Math.pow(n %10,2.0);
+      n = n/2;
+    }
+
+    n = sum;
+
+    if(sum == 1 ) return true;
+
+    if(UI.contains(n)){
+      return true;
+    }
+
+    UI.add(n);
+  }
   public static void main(String args[]) {
 
     // int number[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
